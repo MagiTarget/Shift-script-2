@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body{
+  background:#0f111a;
+  color:#e0e0e0;
+  font-family:'Fira Code', Consolas, monospace;
+  padding:30px;
+}
+
+#line-block{
+  max-width:900px;
+  margin:auto;
+}
+
+.line{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:8px 12px;
+  border-radius:8px;
+  transition: background 0.2s;
+}
+
+.line:nth-child(odd){
+  background:#1c1c2a;
+}
+
+.line:nth-child(even){
+  background:#141421;
+}
+
+button{
+  background:#3b82f6;
+  color:white;
+  border:none;
+  padding:5px 12px;
+  border-radius:6px;
+  cursor:pointer;
+  font-size:13px;
+  flex-shrink:0;
+  transition: background 0.2s;
+}
+
+button:hover{
+  background:#2563eb;
+}
+
+button:disabled{
+  background:#555;
+  cursor:not-allowed;
+}
+
+.text{
+  white-space:pre-wrap;
+  word-break:break-word;
+  flex:1;
+}
+</style>
+</head>
+<body>
+
+<div id="line-block"></div>
+
+<script>
+function copyLine(button, text){
+  navigator.clipboard.writeText(text);
+  let original = button.innerText;
+  button.innerText = "Copied!";
+  setTimeout(()=>{ button.innerText = original }, 1000);
+}
+
+// Full script, one sentence per line
+let rawLines = `Step up for co-host [SI+]
+- <b>Add your co to BC</b>
+Before we start, everyone switch to channel 2. Crouch when switched.
+I will be using a slightly modified shift script for this session. I suggest you pay close attention to what I'm saying, as there could be additional or modified rules.
+Greetings, welcome to today’s shift! My name is Magi, and I’ll be your host today. Good luck! PTS is now active.
+Before we begin, please review the following rules. Failure to comply may result in a strike or dismissal from the shift.
+I - Do not say PTS (Permission To Speak) while me or my co-host are speaking.
+II - Follow all orders given to you by a SI+ unless they ask you to break the rules.
+III - If there is any problem, come to me, my Co-Host, or any other SI+ for assistance.
+IV - Do not ask for promotions/ranks.
+V - Use proper grammar and the correct chat format at all times.
+VI - Do not troll this session. Trolling will result in immediate dismissal.
+VII - Remain respectful to all staff at all times. No arguing or talking back.
+VIII - Keep all communication professional. No jokes, memes, or off-topic talk.
+IX - Do not go AFK without permission.
+Before we begin, the host or co-host will assign your roles. Pay close attention, as your assigned role determines your responsibilities for the duration of the shift. Role details will be explained shortly.
+- <b>Assign them roles.</b>
+Does everyone know their role? Yes/No, CP.
+Now that everyone has their roles, let’s review what each role entails. Pay close attention:
+Patrol Team: Responsible for patrolling the prison and monitoring its status. They ensure that all areas are secure and operational.
+Scout Team: Patrols outside the prison and monitors the premises from watch towers, providing an external security layer.
+Response Team: Handles situations around the set status, responds to any panic calls, and oversees checkpoints and the control room.
+Camera Operator: Manages the cameras, providing real-time updates and reporting on prison activities via radio.
+Captain: Leads the group, maintains control within their team, and ensures order and discipline are upheld.
+Does everyone understand their assignment? Yes/No, CP.
+At a random time during the shift, a drill will be conducted. You are expected to follow all procedures specific to the drill in progress.
+You must maintain clear communication during the drill.
+Please pay close attention as I explain the procedures for today's drill:
+- <b>LD:</b>
+Lockdown Drill: When a Lockdown Drill is initiated, all attendees must escort inmates back to their cells. Ensure that all individuals remain within the cell-block for the duration of the drill. All staff must leave their posts and relocate to cell block.
+- <b>BL:</b>
+Blackout Drill: When a Blackout Drill is initiated, all facility power will be shut off. Guards and inmates must remain inside the cell-block for the entire duration of the drill. Do not attempt to restore power until the procedure has officially concluded. The radio will not work during the blackout.
+- <b>EVAC:</b>
+Evacuation Drill: When the Evacuation Drill starts, all attendees and inmates must proceed to the Maximum Security Yard and stand there. You must evacuate as soon as the alarm commences. It is crucial that you do not transfer inmates and leave the doors open.
+Before dismissal, review the following expectations for the shift. Failure to meet them may result in failing the shift:
+I - Communication: Use radio channel two to communicate. Respond when your status is requested.
+II - Radio Format: When communicating on the radio, follow this format: [Role] (Text). For example: [Patrol] Cell Block is clear!
+III - Door Management: Please remember NOT to leave doors open and NOT to use lethal force unnecessarily.
+IV - Adherence: Maintain clear communication and follow the instructions of the host and co-host at all times.
+V - Grammar: You must use proper grammar while communicating.
+Does everyone understand the rules? Yes/No, CP.
+You are now dismissed to your posts. You may leave the session room or remain behind for any questions.
+- <b>Start posts.</b>
+- DM your sup times (Usually 5 minutes for drill)
+Welcome back, everyone. We will now take a session photo, please do NOT chat while I take the photo.
+Before I announce today’s passers, please rate this session in chat from 1 to 10, be completely honest.
+Now that you've rated this session, let’s recognize the hardest workers. Everyone did a great job today, but these attendees stood out for their exceptional performance:
+Congratulate the following users:
+If anyone wants to use this script for their session, send me a DM.
+Thank you all for attending today’s shift. It’s been a pleasure being your host! The shift is over, you are all dismissed from the session room.`.split("\n");
+
+let out = "";
+rawLines.forEach(l=>{
+  let safe = l.replace(/'/g,"\\'");
+  if(l.trim().startsWith("-")){
+    out += `<div class="line"><button disabled>Copy</button><span class="text">${l}</span></div>`;
+  } else {
+    out += `<div class="line"><button onclick="copyLine(this,'${safe}')">Copy</button><span class="text">${l}</span></div>`;
+  }
+});
+
+document.getElementById("line-block").innerHTML = out;
+</script>
+
+</body>
+</html>
+
+
